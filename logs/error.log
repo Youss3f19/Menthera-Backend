@@ -90,6 +90,7 @@
 2025-11-13 18:03:13 [31merror[39m: [31mError[39m
 2025-11-13 18:16:19 [31merror[39m: [31mError[39m
 2025-11-13 18:37:05 [31merror[39m: [31mRequest failed with status code 400[39m
+
 2025-11-14 20:01:01 [31merror[39m: [31mEmail ou mot de passe incorrect[39m
 2025-11-14 20:01:07 [31merror[39m: [31mEmail ou mot de passe incorrect[39m
 2025-11-14 20:01:21 [31merror[39m: [31mEmail ou mot de passe incorrect[39m
@@ -429,7 +430,6 @@
 2025-11-16 12:39:19 [31merror[39m: [31mToken expiré[39m
 2025-11-16 12:47:11 [31merror[39m: [31mRoute non trouvee: /api/v1/billing/checkout[39m
 2025-11-16 12:47:11 [31merror[39m: [31mRoute non trouvee: /favicon.ico[39m
->>>>>>> d61e4505571fc26bf7c474168778c27ecae7931b
 2025-11-18 22:41:57 [31merror[39m: [31mCet email est déjà utilisé[39m
 2025-11-18 23:00:01 [31merror[39m: [31mRoute non trouvee: /api/v1/voice/sessions/voice[39m
 2025-11-18 23:04:16 [31merror[39m: [31mRoute non trouvee: /api/v1/voice/sessions/voice[39m
@@ -443,6 +443,7 @@
 2025-11-18 23:38:30 [31merror[39m: [31mRequest failed with status code 400[39m
 2025-11-18 23:53:32 [31merror[39m: [31mToken expiré[39m
 2025-11-18 23:54:09 [31merror[39m: [31mRequest failed with status code 500[39m
+
 2025-11-19 14:34:10 [31merror[39m: [31mToken expiré[39m
 2025-11-19 15:33:15 [31merror[39m: [31mRoute non trouvee: /api/v1/voice/sessions/691dd01305cdb98c8be2b8c5[39m
 2025-11-19 15:33:22 [31merror[39m: [31mRoute non trouvee: /api/v1/voice/sessions/691cfa4c10dab5a408ca712c[39m
@@ -458,3 +459,6 @@
 2025-11-19 16:49:00 [31merror[39m: [31mLe mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre[39m
 2025-11-19 16:49:06 [31merror[39m: [31mLe mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre[39m
 2025-11-19 16:49:12 [31merror[39m: [31mLe mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre[39m
+
+2025-11-21 08:48:50 [31merror[39m: [31mRoute non trouvee: /api/v1/chat/sessions/voice[39m
+
