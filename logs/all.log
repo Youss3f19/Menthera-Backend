@@ -18,3 +18,30 @@
 2025-11-23 17:12:37 [31merror[39m: [31mToken expiré[39m
 2025-11-23 17:16:38 [31merror[39m: [31mAccès refusé. Token manquant[39m
 2025-11-23 17:23:24 [31merror[39m: [31mToken expiré[39m
+2025-11-23 17:37:27 [32minfo[39m: [32mSocket.io initialized[39m
+2025-11-23 17:37:27 [32minfo[39m: [32m[WEEKLY JOB] Scheduling weekly summary job to start in 443 minute(s) (day=1 hour=1:0)[39m
+2025-11-23 17:37:27 [32minfo[39m: [32mNotification delivery job started (interval sec=5)[39m
+2025-11-23 17:37:27 [32minfo[39m: [32m Serveur démarré sur le port 5000[39m
+2025-11-23 17:37:27 [32minfo[39m: [32m Environnement: development[39m
+2025-11-23 17:37:27 [32minfo[39m: [32m URL: http://localhost:5000[39m
+2025-11-23 17:37:27 [32minfo[39m: [32m Health check: http://localhost:5000/api/v1/health[39m
+2025-11-23 17:37:27 [32minfo[39m: [32m MongoDB connecté: localhost[39m
+2025-11-23 17:37:32 [32minfo[39m: [32m[INACTIVITY JOB] Looking for users with lastLogin before 2025-11-16T16:37:32.575Z[39m
+2025-11-23 17:37:32 [32minfo[39m: [32m[INACTIVITY JOB] Found 1 inactive users[39m
+2025-11-23 17:37:32 [32minfo[39m: [32m[NOTIF] Created inactivity for user 690f22d36e0170e1ba0fca47[39m
+2025-11-23 17:37:32 [32minfo[39m: [32m[INACTIVITY JOB] Sent 1 inactivity notifications[39m
+2025-11-23 17:38:56 [32minfo[39m: [32mConnexion réussie: lina@gmail.com[39m
+2025-11-23 17:39:21 [31merror[39m: [31mRoute non trouvee: /api/v1/chat/sessions/voice[39m
+2025-11-23 17:45:49 [31merror[39m: [31mAccès refusé. Token manquant[39m
+2025-11-23 17:54:48 [31merror[39m: [31mToken expiré[39m
+2025-11-23 18:00:32 [31merror[39m: [31mChaque question doit avoir text, choices[] et correctIndex[39m
+2025-11-23 18:03:37 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 690f22d36e0170e1ba0fca47[39m
+2025-11-23 18:03:37 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 691de710d12dbecf9217591b[39m
+2025-11-23 18:03:37 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 68fa8d306d414aeaa4b9a0cb[39m
+2025-11-23 18:03:37 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 69220073457c94f678261026[39m
+2025-11-23 18:11:22 [31merror[39m: [31mToken expiré[39m
+2025-11-23 18:13:55 [31merror[39m: [31mToken expiré[39m
+2025-11-23 18:13:55 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 68fa8d306d414aeaa4b9a0cb[39m
+2025-11-23 18:13:55 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 691de710d12dbecf9217591b[39m
+2025-11-23 18:13:55 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 69220073457c94f678261026[39m
+2025-11-23 18:13:55 [32minfo[39m: [32m[NOTIF] Created challenge_published for user 690f22d36e0170e1ba0fca47[39m
