@@ -35,7 +35,7 @@ weeklyChallengeSchema.index({ weekStart: 1 }, { unique: true });
  */
 weeklyChallengeSchema.methods.getLeaderboard = function(limit = 10) {
   const arr = (this.participants || []).slice();
-  arr.sort((a,b) => {
+  arr.sort((a, b) => {
     if (b.score !== a.score) return b.score - a.score;
     return new Date(a.submittedAt) - new Date(b.submittedAt);
   });
