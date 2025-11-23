@@ -6,7 +6,7 @@ const adviceRatingRoutes = require('./adviceRating.routes');
 const adminRoutes = require('./admin.routes');
 const weeklyChallengeRoutes = require('./weeklyChallenge.routes');
 const notificationRoutes = require('./notification.routes');
-
+const userRoutes=require('./user.routes.js');
 const router = express.Router();
 
 /**
@@ -35,5 +35,12 @@ router.use('/', adminRoutes);
 router.use('/', weeklyChallengeRoutes);
 // Notifications
 router.use('/', notificationRoutes);
+
+//profil
+router.use('/user', userRoutes);
+
+// //avatar
+// const path = require('path');
+// router.use('/avatars', express.static(path.join(__dirname, 'public', 'avatars')));
 
 module.exports = router;
