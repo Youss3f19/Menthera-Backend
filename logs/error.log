@@ -497,3 +497,6 @@
 2025-11-23 10:17:15 [31merror[39m: [31mlocalStorage is not defined[39m
 2025-11-23 10:40:03 [31merror[39m: [31mToken expiré[39m
 2025-11-23 10:40:03 [31merror[39m: [31mToken expiré[39m
+2025-11-23 17:38:25 [31merror[39m: [31mRoute non trouvee: /api/v1/chat/sessions/voice[39m
+2025-11-23 17:38:30 [31merror[39m: [31mRoute non trouvee: /api/v1/chat/sessions/voice[39m
+2025-11-23 17:42:16 [31merror[39m: [31mRoute non trouvee: /api/v1/user/me[39m

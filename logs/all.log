@@ -2790,3 +2790,42 @@
 2025-11-23 11:02:20 [32minfo[39m: [32mConnexion réussie: admin@gmail.com[39m
 2025-11-23 11:05:30 [32minfo[39m: [32mDéconnexion utilisateur : admin@gmail.com[39m
 2025-11-23 11:05:37 [32minfo[39m: [32mConnexion réussie: admin@gmail.com[39m
+2025-11-23 17:33:51 [32minfo[39m: [32mSocket.io initialized[39m
+2025-11-23 17:33:51 [32minfo[39m: [32m[WEEKLY JOB] Scheduling weekly summary job to start in 446 minute(s) (day=1 hour=1:0)[39m
+2025-11-23 17:33:51 [32minfo[39m: [32mNotification delivery job started (interval sec=5)[39m
+2025-11-23 17:33:51 [32minfo[39m: [32m Serveur démarré sur le port 5000[39m
+2025-11-23 17:33:51 [32minfo[39m: [32m Environnement: development[39m
+2025-11-23 17:33:51 [32minfo[39m: [32m URL: http://localhost:5000[39m
+2025-11-23 17:33:51 [32minfo[39m: [32m Health check: http://localhost:5000/api/v1/health[39m
+2025-11-23 17:33:51 [32minfo[39m: [32m MongoDB connecté: localhost[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[INACTIVITY JOB] Looking for users with lastLogin before 2025-11-16T16:33:56.118Z[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[INACTIVITY JOB] Found 6 inactive users[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[NOTIF] Created inactivity for user 68f52ad159ce6d23b2d15fad[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[NOTIF] Created inactivity for user 68f52b4c59ce6d23b2d15fb0[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[NOTIF] Created inactivity for user 690f37c189e98469a4598f9f[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[NOTIF] Created inactivity for user 6911ba003575b08ce5594472[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[NOTIF] Created inactivity for user 6915bcffc7657c5e97bc455c[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[NOTIF] Created inactivity for user 691707e0fecfdbb56b5033ab[39m
+2025-11-23 17:33:56 [32minfo[39m: [32m[INACTIVITY JOB] Sent 6 inactivity notifications[39m
+2025-11-23 17:37:23 [32minfo[39m: [32mNouvel utilisateur créé: youssef@gmail.com[39m
+2025-11-23 17:38:04 [32minfo[39m: [32mConnexion réussie: youssef@gmail.com[39m
+2025-11-23 17:38:25 [31merror[39m: [31mRoute non trouvee: /api/v1/chat/sessions/voice[39m
+2025-11-23 17:38:30 [31merror[39m: [31mRoute non trouvee: /api/v1/chat/sessions/voice[39m
+2025-11-23 17:40:31 [32minfo[39m: [32mSocket.io initialized[39m
+2025-11-23 17:40:31 [32minfo[39m: [32m[WEEKLY JOB] Scheduling weekly summary job to start in 439 minute(s) (day=1 hour=1:0)[39m
+2025-11-23 17:40:31 [32minfo[39m: [32mNotification delivery job started (interval sec=5)[39m
+2025-11-23 17:40:31 [32minfo[39m: [32m Serveur démarré sur le port 5000[39m
+2025-11-23 17:40:31 [32minfo[39m: [32m Environnement: development[39m
+2025-11-23 17:40:31 [32minfo[39m: [32m URL: http://localhost:5000[39m
+2025-11-23 17:40:31 [32minfo[39m: [32m Health check: http://localhost:5000/api/v1/health[39m
+2025-11-23 17:40:31 [32minfo[39m: [32m MongoDB connecté: localhost[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[INACTIVITY JOB] Looking for users with lastLogin before 2025-11-16T16:40:36.265Z[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[INACTIVITY JOB] Found 6 inactive users[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[NOTIF] Created inactivity for user 68f52ad159ce6d23b2d15fad[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[NOTIF] Created inactivity for user 68f52b4c59ce6d23b2d15fb0[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[NOTIF] Created inactivity for user 690f37c189e98469a4598f9f[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[NOTIF] Created inactivity for user 6911ba003575b08ce5594472[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[NOTIF] Created inactivity for user 6915bcffc7657c5e97bc455c[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[NOTIF] Created inactivity for user 691707e0fecfdbb56b5033ab[39m
+2025-11-23 17:40:36 [32minfo[39m: [32m[INACTIVITY JOB] Sent 6 inactivity notifications[39m
+2025-11-23 17:42:16 [31merror[39m: [31mRoute non trouvee: /api/v1/user/me[39m
