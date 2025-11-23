@@ -12,12 +12,12 @@ const userSchema = new mongoose.Schema({
 
   avatar: { type: String, default: null },
   authProvider: { type: String, enum: ['local','google','facebook'], default: 'local' },
-
   // Role-based access control
   role: { type: String, enum: ['user','admin'], default: 'user', index: true },
 
-  // Subscription relation: moved premium flags to separate Subscription model
-  subscription: { type: mongoose.Schema.Types.ObjectId, ref: 'Subscription', default: null, index: true },
+stripeSubscriptionId: { type: String, index: true, default: null },
+  isPremium: { type: Boolean, default: false },
+  premiumExpiresAt: { type: Date, default: null },
 
   isEmailVerified: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },
@@ -56,7 +56,7 @@ userSchema.methods.comparePassword = function(p){ return bcrypt.compare(p, this.
 userSchema.methods.isAdmin = function(){ return this.role === 'admin'; };
 
 // Async helper: checks linked Subscription document if present, otherwise loads it.
-userSchema.methods.isActivePremium = async function(){
+/*userSchema.methods.isActivePremium = async function(){
   // If subscription is populated as an object
   if (this.subscription && typeof this.subscription === 'object') {
     if (this.subscription.isActive === false) return false;
@@ -74,17 +74,20 @@ userSchema.methods.isActivePremium = async function(){
   } catch (e) {
     return false;
   }
-};
+};*/
+
+userSchema.methods.isActivePremium = function(){ if (!this.isPremium) return false; if (!this.premiumExpiresAt) return true; return this.premiumExpiresAt > new Date(); };
+
 userSchema.statics.findByEmail = function(email){ return this.findOne({ email: email.toLowerCase() }); };
 userSchema.virtual('displayName').get(function(){ return this.name || this.email.split('@')[0]; });
 
 // Virtual boolean for convenience when subscription is already populated
-userSchema.virtual('isPremium').get(function(){
+/*userSchema.virtual('isPremium').get(function(){
   if (this.subscription && typeof this.subscription === 'object') {
     if (this.subscription.isActive === false) return false;
     if (!this.subscription.expiresAt) return true;
     return this.subscription.expiresAt > new Date();
   }
   return false;
-});
+});*/
 module.exports = mongoose.model('User', userSchema);

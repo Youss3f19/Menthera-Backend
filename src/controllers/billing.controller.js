@@ -1,12 +1,8 @@
 const StripeService = require('../services/stripe.service');
-const logger = require('../utils/logger');
-
-const stripeSecret = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET;
 const Stripe = require('stripe');
-const stripe = stripeSecret ? new Stripe(stripeSecret) : null;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const User = require('../models/User.model');
-const Subscription = require('../models/Subscription.model');
 const ApiError = require('../utils/apiError');
 const apiResponse = require('../utils/apiResponse');
 
@@ -15,13 +11,6 @@ class BillingController {
   // CREATE CHECKOUT SESSION
   static async createCheckout(req, res) {
     try {
-      if (!stripe) {
-        return res.json({
-          success: false,
-          code: 503,
-          message: "Stripe not configured. Payment unavailable."
-        });
-      }
       const { plan } = req.body;
       const userId = req.user.id;
 
@@ -148,32 +137,29 @@ class BillingController {
   // CANCEL SUBSCRIPTION
   static async cancelSubscription(req, res) {
     try {
-      if (!stripe) {
-        return res.json({
-          success: false,
-          code: 503,
-          message: "Stripe not configured."
-        });
-      }
       const user = await User.findById(req.user.id);
 
-      const sub = await Subscription.findOne({ user: userId });
-      if (!sub || !sub.isActive) {
-        throw ApiError.badRequest('Aucun abonnement actif');
+      if (!user || !user.stripeSubscriptionId) {
+        return res.json({
+          success: false,
+          code: 400,
+          message: "Aucun abonnement actif"
+        });
       }
 
-      // Mark subscription as inactive (local cancel)
-      sub.isActive = false;
-      await sub.save();
+      await StripeService.cancelSubscription(user.stripeSubscriptionId);
 
-      // Clear link on user (optional)
-      if (user) {
-        user.subscription = null;
-        await user.save();
-      }
+      user.isPremium = false;
+      user.premiumExpiresAt = null;
+      user.stripeSubscriptionId = null;
+      await user.save();
 
-      logger.info(`Abonnement annulé pour user ${user?.email}`);
-      return res.json(apiResponse.success({ message: 'Abonnement annulé avec succès' }));
+      return res.json({
+        success: true,
+        code: 200,
+        message: "Abonnement annulé"
+      });
+
     } catch (error) {
       return res.json({
         success: false,
@@ -189,105 +175,80 @@ class BillingController {
     let event;
 
     try {
-      if (!stripe) {
-        return res.status(503).json({ error: 'Stripe not configured' });
-      }
       const signature = req.headers["stripe-signature"];
       event = StripeService.verifyWebhookSignature(req.body, signature);
     } catch (err) {
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    try {
-      if (event.type === 'checkout.session.completed' || event.type === 'invoice.paid') {
-        const data = event.data.object;
-        const subscriptionId = data.subscription;
+    switch (event.type) {
 
-        if (subscriptionId) {
-          const stripeSub = await StripeService.getSubscription(subscriptionId);
-          const customerEmail = data.customer_email || stripeSub.customer_email;
-
-          if (customerEmail) {
-            const user = await User.findOne({ email: customerEmail });
-
-            if (user) {
-              const periodEndSec = stripeSub?.current_period_end;
-              if (!periodEndSec) {
-                logger.error(`[STRIPE] Subscription sans current_period_end pour user ${customerEmail}`);
-                return res.json({ received: true });
-              }
-
-              const periodEndMs = Number(periodEndSec) * 1000;
-              const dateEnd = new Date(periodEndMs);
-
-              if (isNaN(dateEnd.getTime()) || !isFinite(dateEnd.getTime())) {
-                logger.error(`[STRIPE] current_period_end "${periodEndSec}" non convertible pour user ${customerEmail}`);
-                return res.json({ received: true });
-              }
-
-              // Create or update local Subscription
-              let sub = await Subscription.findOne({ user: user._id });
-              const planMeta = (stripeSub?.metadata && stripeSub.metadata.plan) || data?.metadata?.plan || 'premium';
-              if (!sub) {
-                sub = await Subscription.create({
-                  user: user._id,
-                  tier: planMeta,
-                  isActive: true,
-                  startsAt: new Date(),
-                  expiresAt: dateEnd,
-                  autoRenew: true,
-                  metadata: { stripeSubscriptionId: subscriptionId }
-                });
-              } else {
-                sub.tier = planMeta || sub.tier;
-                sub.isActive = true;
-                sub.expiresAt = dateEnd;
-                sub.metadata = Object.assign({}, sub.metadata || {}, { stripeSubscriptionId: subscriptionId });
-                await sub.save();
-              }
-
-              user.subscription = sub._id;
-              await user.save();
-
-              logger.info(`Premium activé: ${customerEmail} jusqu'à ${dateEnd.toISOString()}`);
-            } else {
-              logger.warn(`[STRIPE] Pas d'utilisateur trouvé pour email ${customerEmail}`);
-            }
-          }
-        }
-      }
-
-      if (event.type === 'customer.subscription.deleted') {
-        const subscription = event.data.object;
-        logger.warn(`Abonnement annulé: ${subscription.id}`);
-        const customerEmail = subscription?.customer_email || null;
-        if (customerEmail) {
-          const user = await User.findOne({ email: customerEmail });
-          if (user) {
-            const sub = await Subscription.findOne({ user: user._id });
-            if (sub) {
-              sub.isActive = false;
-              await sub.save();
-              user.subscription = null;
-              await user.save();
-            }
-          }
-        }
-      }
-
-      if (event.type === 'invoice.payment_failed') {
+      case "invoice.paid": {
         const invoice = event.data.object;
-        logger.error(`Échec paiement: ${invoice.customer_email}`);
+        const subscriptionId =
+          invoice.parent?.subscription_details?.subscription ||
+          invoice.subscription ||
+          null;
+
+        if (!subscriptionId) break;
+
+        const customerId = invoice.customer;
+        const customer = await StripeService.getCustomer(customerId);
+        const email = customer.email.toLowerCase();
+
+        const user = await User.findOne({ email });
+        if (!user) break;
+
+        const subscription = await StripeService.getSubscription(subscriptionId);
+
+        let periodEnd = subscription?.current_period_end
+          ? new Date(subscription.current_period_end * 1000)
+          : null;
+
+        user.isPremium = true;
+        user.stripeSubscriptionId = subscriptionId;
+
+        if (!periodEnd || isNaN(periodEnd)) {
+          const amount = invoice.amount_paid;
+          periodEnd = new Date();
+
+          if (amount === 999) {
+            periodEnd.setMonth(periodEnd.getMonth() + 1);
+          } else if (amount === 1499) {
+            periodEnd.setMonth(periodEnd.getMonth() + 3);
+          } else if (amount === 7999) {
+            periodEnd.setFullYear(periodEnd.getFullYear() + 1);
+          } else {
+            periodEnd.setMonth(periodEnd.getMonth() + 1);
+          }
+        }
+
+        user.premiumExpiresAt = periodEnd;
+
+        await user.save();
+        break;
       }
 
-      return res.json({ received: true });
-    } catch (error) {
-      logger.error(`Erreur traitement webhook: ${error.message}`);
-      return res.status(500).json({ error: 'Webhook processing error' });
-    }
-}
 
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object;
+
+        const user = await User.findOne({
+          stripeSubscriptionId: subscription.id,
+        });
+
+        if (user) {
+          user.isPremium = false;
+          user.premiumExpiresAt = null;
+          user.stripeSubscriptionId = null;
+          await user.save();
+        }
+        break;
+      }
+    }
+
+    return res.json({ success: true, code: 200, received: true });
+  }
 }
 
 module.exports = BillingController;
-
